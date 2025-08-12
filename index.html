@@ -21,6 +21,65 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<!-- Responsive CSS -->
 	<link rel="stylesheet" href="css/responsive.css" />
+	<style>
+		/* RTL Support for Arabic */
+		[dir="rtl"] {
+			direction: rtl;
+			text-align: right;
+		}
+		
+		[dir="rtl"] .language-switcher {
+			direction: ltr;
+		}
+		
+		/* Language switcher hover effects */
+		.language-switcher .current-flag:hover {
+			background: rgba(255,255,255,0.2);
+			border-radius: 20px;
+			padding: 4px 8px;
+			margin: -4px -8px;
+		}
+		
+		.flag-option:hover {
+			background: rgba(255,255,255,0.1) !important;
+		}
+		
+		.language-menu {
+			box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+			border: 1px solid rgba(255,255,255,0.1);
+		}
+		
+		/* Fix layout issues */
+		.main-container {
+			position: relative;
+			width: 100%;
+			height: 100vh;
+			overflow-x: hidden;
+		}
+		
+		/* Ensure proper container positioning */
+		.container {
+			position: relative;
+			z-index: 5;
+		}
+		
+		/* Fix browser icons positioning */
+		.browser-icon-box {
+			position: absolute !important;
+			bottom: 120px !important;
+			left: 0 !important;
+			right: 0 !important;
+			z-index: 10 !important;
+		}
+		
+		/* Ensure language switcher doesn't cause overflow */
+		.language-switcher {
+			position: absolute !important;
+			top: 30px !important;
+			right: 30px !important;
+			z-index: 1000 !important;
+		}
+	</style>
 </head>
 <body class="bg-img body-bg">
 	<div class="tubular" id="home_bg"  data-property="{videoURL:'https://www.youtube.com/watch?v=gYO1uk7vIcc',containment:'#home_bg',autoPlay:true, mute:true, startAt:0, showControls:false, loop:true, opacity:1}"></div>
@@ -49,6 +108,45 @@
 				</div>
 			</div>
 		</div>
+		<!-- LANGUAGE SWITCHER START -->
+		<div class="language-switcher" style="position: absolute; top: 30px; right: 30px; z-index: 1000; background: rgba(255,255,255,0.1); border-radius: 25px; padding: 8px; backdrop-filter: blur(10px);">
+			<div class="current-flag" onclick="toggleLanguageMenu()" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+				<img id="currentFlag" src="flags/united-states-of-america.png" alt="Current Language" style="width: 24px; height: 16px; border-radius: 2px; object-fit: cover;" />
+				<span id="currentLang" style="color: white; font-size: 14px; font-weight: 500;">EN</span>
+				<i class="icofont icofont-simple-down" style="color: white; font-size: 12px;"></i>
+			</div>
+			<div id="languageMenu" class="language-menu" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: rgba(0,0,0,0.9); border-radius: 15px; padding: 8px; min-width: 150px; backdrop-filter: blur(10px);">
+				<div class="flag-option" onclick="changeLanguage('en')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/united-states-of-america.png" alt="English" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">English</span>
+				</div>
+				<div class="flag-option" onclick="changeLanguage('es')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/spain.png" alt="Español" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">Español</span>
+				</div>
+				<div class="flag-option" onclick="changeLanguage('fr')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/france.png" alt="Français" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">Français</span>
+				</div>
+				<div class="flag-option" onclick="changeLanguage('de')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/germany.png" alt="Deutsch" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">Deutsch</span>
+				</div>
+				<div class="flag-option" onclick="changeLanguage('ar')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/arabic.png" alt="العربية" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">العربية</span>
+				</div>
+				<div class="flag-option" onclick="changeLanguage('zh')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/china.png" alt="中文" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">中文</span>
+				</div>
+				<div class="flag-option" onclick="changeLanguage('ja')" style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-radius: 8px; transition: background 0.2s;">
+					<img src="flags/japan.png" alt="日本語" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;" />
+					<span style="color: white; font-size: 13px;">日本語</span>
+				</div>
+			</div>
+		</div>
+		<!-- LANGUAGE SWITCHER END -->
 		<!-- LOGO PART END -->
 
 		<!-- BODY PART START -->
@@ -61,12 +159,12 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="title">
-										<p class="small-title">Professional video and audio recording and screenshot taker.</p>
-										<p style="color: #fff; font-size: 18px; font-weight: 400; margin-top: 8px; opacity: 0.9;">Available as Chrome extension.</p>
+										<p class="small-title" data-translate="subtitle">Professional video and audio recording and screenshot taker.</p>
+										<p style="color: #fff; font-size: 18px; font-weight: 400; margin-top: 8px; opacity: 0.9;" data-translate="extension-note">It will be Available as Chrome extension Soon.</p>
 										<span class="main-title">Screnio</span>
-										<p class="chrome-extension-text" style="color: #00b3fd; font-size: 18px; font-weight: 600; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;">Chrome Extension Soon!!</p>
+										<p class="chrome-extension-text" style="color: #00b3fd; font-size: 18px; font-weight: 600; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;" data-translate="extension-soon">Chrome Extension Soon!!</p>
 										<button onclick="addToFavorites()" class="btn btn-primary" style="margin-top: 20px; padding: 12px 25px; font-size: 16px; font-weight: 600; border-radius: 25px; background: linear-gradient(135deg, #00b3fd 0%, #00c6ff 100%); border: none; box-shadow: 0 4px 15px rgba(0, 179, 253, 0.3); transition: all 0.3s ease;">
-											<i class="icofont icofont-star" style="margin-right: 8px;"></i>Add to Favorites
+											<i class="icofont icofont-star" style="margin-right: 8px;"></i><span data-translate="add-favorites">Add to Favorites</span>
 										</button>
 									</div>
 								</div>
@@ -178,7 +276,7 @@
 		<!-- BODY PART END -->
 	</div>
 	<!-- BROWSER ICONS PART START -->
-	<div class="browser-icon-box text-center" style="position: fixed; bottom: 120px; left: 0; right: 0; z-index: 10;">
+	<div class="browser-icon-box text-center" style="position: absolute; bottom: 120px; left: 0; right: 0; z-index: 10;">
 		<ul class="list-inline browser-icons" style="margin: 0; padding: 0;">
 			<li style="display: inline-block; margin: 0 20px; text-align: center;">
 				<img src="svg/chrome-like-svgrepo-com.svg" alt="Google Chrome" style="width: 55px; height: 55px; display: block; margin: 0 auto 10px;" />
@@ -221,6 +319,124 @@
 			jQuery(".tubular").YTPlayer();
 		});
 		
+		// Translation system
+		const translations = {
+			en: {
+				'subtitle': 'Professional video and audio recording and screenshot taker.',
+				'extension-note': 'It will be Available as Chrome extension Soon.',
+				'extension-soon': 'Chrome Extension Soon!!',
+				'add-favorites': 'Add to Favorites'
+			},
+			es: {
+				'subtitle': 'Herramienta profesional de grabación de video y audio y captura de pantalla.',
+				'extension-note': 'Estará disponible como extensión de Chrome pronto.',
+				'extension-soon': '¡¡Extensión de Chrome Pronto!!',
+				'add-favorites': 'Agregar a Favoritos'
+			},
+			fr: {
+				'subtitle': 'Outil professionnel d\'enregistrement vidéo et audio et de capture d\'écran.',
+				'extension-note': 'Il sera bientôt disponible comme extension Chrome.',
+				'extension-soon': 'Extension Chrome Bientôt !!',
+				'add-favorites': 'Ajouter aux Favoris'
+			},
+			de: {
+				'subtitle': 'Professionelles Video- und Audioaufnahme- und Screenshot-Tool.',
+				'extension-note': 'Es wird bald als Chrome-Erweiterung verfügbar sein.',
+				'extension-soon': 'Chrome-Erweiterung Bald !!',
+				'add-favorites': 'Zu Favoriten hinzufügen'
+			},
+			ar: {
+				'subtitle': 'أداة احترافية لتسجيل الفيديو والصوت والتقاط الشاشة.',
+				'extension-note': 'ستكون متاحة كإضافة Chrome قريباً.',
+				'extension-soon': 'إضافة Chrome قريباً !!',
+				'add-favorites': 'إضافة إلى المفضلة'
+			},
+			zh: {
+				'subtitle': '专业的视频和音频录制以及截图工具。',
+				'extension-note': '很快将作为Chrome扩展程序提供。',
+				'extension-soon': 'Chrome扩展程序即将推出！！',
+				'add-favorites': '添加到收藏夹'
+			},
+			ja: {
+				'subtitle': 'プロフェッショナルな動画・音声録画・スクリーンショットツール。',
+				'extension-note': 'Chrome拡張機能として間もなく利用可能になります。',
+				'extension-soon': 'Chrome拡張機能間もなく！！',
+				'add-favorites': 'お気に入りに追加'
+			}
+		};
+
+		// Flag mappings
+		const flagMappings = {
+			en: { flag: 'flags/united-states-of-america.png', code: 'EN' },
+			es: { flag: 'flags/spain.png', code: 'ES' },
+			fr: { flag: 'flags/france.png', code: 'FR' },
+			de: { flag: 'flags/germany.png', code: 'DE' },
+			ar: { flag: 'flags/arabic.png', code: 'AR' },
+			zh: { flag: 'flags/china.png', code: 'ZH' },
+			ja: { flag: 'flags/japan.png', code: 'JA' }
+		};
+
+		// Function to change language
+		function changeLanguage(lang) {
+			const elements = document.querySelectorAll('[data-translate]');
+			elements.forEach(element => {
+				const key = element.getAttribute('data-translate');
+				if (translations[lang] && translations[lang][key]) {
+					element.textContent = translations[lang][key];
+				}
+			});
+			
+			// Update page title and meta description
+			const titleTranslations = {
+				en: 'Screnio - Video Recording & Screenshot Tool',
+				es: 'Screnio - Herramienta de Grabación de Video y Captura de Pantalla',
+				fr: 'Screnio - Outil d\'Enregistrement Vidéo et Capture d\'Écran',
+				de: 'Screnio - Video-Aufnahme- und Screenshot-Tool',
+				ar: 'Screnio - أداة تسجيل الفيديو والتقاط الشاشة',
+				zh: 'Screnio - 视频录制和截图工具',
+				ja: 'Screnio - 動画録画・スクリーンショットツール'
+			};
+			
+			if (titleTranslations[lang]) {
+				document.title = titleTranslations[lang];
+			}
+			
+			// Update flag and language code
+			if (flagMappings[lang]) {
+				document.getElementById('currentFlag').src = flagMappings[lang].flag;
+				document.getElementById('currentLang').textContent = flagMappings[lang].code;
+			}
+			
+			// Handle RTL for Arabic
+			if (lang === 'ar') {
+				document.body.setAttribute('dir', 'rtl');
+			} else {
+				document.body.removeAttribute('dir');
+			}
+			
+			// Close language menu
+			document.getElementById('languageMenu').style.display = 'none';
+			
+			// Store language preference
+			localStorage.setItem('preferredLanguage', lang);
+		}
+
+		// Function to toggle language menu
+		function toggleLanguageMenu() {
+			const menu = document.getElementById('languageMenu');
+			menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+		}
+
+		// Close menu when clicking outside
+		document.addEventListener('click', function(event) {
+			const languageSwitcher = document.querySelector('.language-switcher');
+			const menu = document.getElementById('languageMenu');
+			
+			if (!languageSwitcher.contains(event.target) && menu.style.display === 'block') {
+				menu.style.display = 'none';
+			}
+		});
+
 		// Function to add current page to favorites/bookmarks
 		function addToFavorites() {
 			var url = window.location.href;
@@ -258,6 +474,40 @@
 				document.body.removeChild(link);
 			}
 		}
+
+		// Function to detect browser language
+		function detectBrowserLanguage() {
+			const browserLang = navigator.language || navigator.userLanguage;
+			const langCode = browserLang.split('-')[0].toLowerCase();
+			
+			// Map browser language codes to our supported languages
+			const languageMap = {
+				'en': 'en',
+				'es': 'es',
+				'fr': 'fr',
+				'de': 'de',
+				'ar': 'ar',
+				'zh': 'zh',
+				'ja': 'ja'
+			};
+			
+			return languageMap[langCode] || 'en';
+		}
+
+		// Initialize language on page load
+		document.addEventListener('DOMContentLoaded', function() {
+			// Check for saved language preference first
+			let savedLang = localStorage.getItem('preferredLanguage');
+			
+			// If no saved preference, detect browser language
+			if (!savedLang) {
+				savedLang = detectBrowserLanguage();
+				// Save the detected language
+				localStorage.setItem('preferredLanguage', savedLang);
+			}
+			
+			changeLanguage(savedLang);
+		});
 	</script>
 </body>
 </html>
