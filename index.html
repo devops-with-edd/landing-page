@@ -7,8 +7,8 @@
 	<meta name="description" content="Professional video recording and screenshot tool with Chrome extension. Capture, record, and share your screen effortlessly." />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="svg/screnio-logo.png" type="image/png" />
+	<link rel="icon" href="svg/screnio-logo.png" type="image/png" />
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=Playfair+Display:wght@700&family=Orbitron:wght@400;700;800;900&display=swap" rel="stylesheet" />
 	<!-- Ico Font CSS -->
@@ -239,12 +239,21 @@
 				link.rel = 'bookmark';
 				document.body.appendChild(link);
 				
+				// Try to trigger the bookmark dialog
+				try {
+					link.click();
+				} catch (e) {
+					// If that fails, show instructions
+				}
+				
 				// Show user-friendly message with keyboard shortcut
-				alert('To bookmark this page:\n\n' +
-					  '• Press Ctrl+D (Windows/Linux) or Cmd+D (Mac)\n' +
-					  '• Or right-click and select "Bookmark this page"\n' +
-					  '• Or drag this link to your bookmarks bar\n\n' +
-					  'Page: ' + title + '\nURL: ' + url);
+				setTimeout(function() {
+					alert('To bookmark this page:\n\n' +
+						  '• Press Ctrl+D (Windows/Linux) or Cmd+D (Mac)\n' +
+						  '• Or right-click and select "Bookmark this page"\n' +
+						  '• Or drag this link to your bookmarks bar\n\n' +
+						  'Page: ' + title + '\nURL: ' + url);
+				}, 100);
 				
 				document.body.removeChild(link);
 			}
